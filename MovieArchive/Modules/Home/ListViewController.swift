@@ -51,8 +51,14 @@ final class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Movie Archive"
+        
+//        navigationController?.navigationItem.title = "Movie Archive"
+//        navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.title = "Movie Archive"
+//        navigation
+//        navigationController?.navigationItem.preferredSearchBarPlacement = .automatic
         setupUI()
         setupConstraints()
     }

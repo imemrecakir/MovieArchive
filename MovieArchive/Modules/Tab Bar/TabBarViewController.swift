@@ -38,6 +38,7 @@ final class TabBarViewController: UITabBarController {
     private func createViewController(tabViewController: UIViewController, title: String, image: String) -> UINavigationController {
         tabViewController.view.backgroundColor = .systemBackground
         let navigationController = UINavigationController(rootViewController: tabViewController)
+        navigationController.navigationBar.prefersLargeTitles = true
         navigationController.tabBarItem.title = title
         navigationController.tabBarItem.image = UIImage(systemName: image)
         return navigationController
