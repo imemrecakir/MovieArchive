@@ -7,15 +7,7 @@
 
 import UIKit
 
-class ListViewController: UIViewController {
-    
-    private lazy var filterBarItem: UIBarButtonItem = {
-        let filterIcon = UIImage(systemName: "line.3.horizontal.decrease.circle.fill")?.withRenderingMode(.alwaysOriginal).withTintColor(.white)
-        return UIBarButtonItem(image: filterIcon,
-                               style: .plain,
-                               target: self,
-                               action: #selector(filterTapped))
-    }()
+final class ListViewController: UIViewController {
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -24,6 +16,22 @@ class ListViewController: UIViewController {
         searchBar.searchBarStyle = .default
         searchBar.delegate = self
         return searchBar
+    }()
+    
+    private lazy var categoryCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
+        layout.itemSize = CGSize(width: (view.frame.width / 4) - 5, height: 50)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.reusableIdentifier)
+        return collectionView
     }()
     
     private lazy var listCollectionView: UICollectionView = {
@@ -43,16 +51,32 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = filterBarItem
+        navigationItem.title = "Movie Archive"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        setupUI()
+        setupConstraints()
+    }
+    
+    private func setupUI() {
         view.addSubview(searchBar)
+        view.addSubview(categoryCollectionView)
         view.addSubview(listCollectionView)
+    }
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
+            categoryCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            categoryCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            categoryCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            categoryCollectionView.bottomAnchor.constraint(equalTo: listCollectionView.topAnchor, constant: -12),
+            categoryCollectionView.heightAnchor.constraint(equalToConstant: 60),
+            
             listCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            listCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            listCollectionView.topAnchor.constraint(equalTo: categoryCollectionView.bottomAnchor, constant: 12),
             listCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             listCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
@@ -69,11 +93,20 @@ extension ListViewController: UISearchBarDelegate {
 
 extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 200
+        return collectionView == listCollectionView ? 20 : 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.reusableIdentifier, for: indexPath)
-        return cell
+        if collectionView == listCollectionView {
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.reusableIdentifier, for: indexPath) as? ListCollectionViewCell {
+                return cell
+            }
+        } else {
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reusableIdentifier, for: indexPath) as? CategoryCollectionViewCell {
+                return cell
+            }
+        }
+        
+        return UICollectionViewCell()
     }
 }

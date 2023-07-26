@@ -20,10 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         let window = UIWindow(windowScene: scene)
-        window.rootViewController = MainViewController()
-        window.overrideUserInterfaceStyle = .dark
-        window.makeKeyAndVisible()
+        window.rootViewController = TabBarViewController()
         self.window = window
+        window.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

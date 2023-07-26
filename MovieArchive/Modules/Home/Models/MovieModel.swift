@@ -5,7 +5,7 @@
 //  Created by Emre Çakır on 23.07.2023.
 //
 
-import Foundation
+import UIKit
 
 struct MovieModel: Codable {
     let page: Int
