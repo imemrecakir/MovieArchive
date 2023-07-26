@@ -63,6 +63,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		308774332A7180CE001C686A /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				308774382A718378001C686A /* DatabaseService */,
+				308774372A71836D001C686A /* APIService */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		308774342A7180D4001C686A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				30BF67FF2A6D89AB0078C8AE /* MovieModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		308774352A7181FB001C686A /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		308774362A718203001C686A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		308774372A71836D001C686A /* APIService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = APIService;
+			sourceTree = "<group>";
+		};
+		308774382A718378001C686A /* DatabaseService */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DatabaseService;
+			sourceTree = "<group>";
+		};
 		30BF67C62A6D66040078C8AE = {
 			isa = PBXGroup;
 			children = (
@@ -82,8 +127,12 @@
 		30BF67D12A6D66040078C8AE /* MovieArchive */ = {
 			isa = PBXGroup;
 			children = (
-				30BF68012A6D979A0078C8AE /* MockData */,
+				308774362A718203001C686A /* Helpers */,
+				30BF68012A6D979A0078C8AE /* Mock Datas */,
+				308774342A7180D4001C686A /* Models */,
+				308774332A7180CE001C686A /* Networking */,
 				30BF67FB2A6D736D0078C8AE /* Supported Files */,
+				308774352A7181FB001C686A /* Utilities */,
 				30BF67E62A6D72B90078C8AE /* Modules */,
 			);
 			path = MovieArchive;
@@ -102,7 +151,6 @@
 		30BF67E82A6D72DE0078C8AE /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				30BF67FE2A6D899F0078C8AE /* Models */,
 				30BF67D62A6D66040078C8AE /* ListViewController.swift */,
 				30BF67E92A6D72E80078C8AE /* ListViewModel.swift */,
 				30BF67EB2A6D72F00078C8AE /* ListDataController.swift */,
@@ -144,20 +192,12 @@
 			path = "Supported Files";
 			sourceTree = "<group>";
 		};
-		30BF67FE2A6D899F0078C8AE /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				30BF67FF2A6D89AB0078C8AE /* MovieModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		30BF68012A6D979A0078C8AE /* MockData */ = {
+		30BF68012A6D979A0078C8AE /* Mock Datas */ = {
 			isa = PBXGroup;
 			children = (
 				30BF680A2A6FFE2A0078C8AE /* movie_mock_data.json */,
 			);
-			path = MockData;
+			path = "Mock Datas";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
