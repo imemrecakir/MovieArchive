@@ -32,6 +32,9 @@
 		30F3EDD32A71E976008F484C /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDD22A71E976008F484C /* EnvironmentManager.swift */; };
 		30F3EDD62A71FBED008F484C /* UIIMageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDD52A71FBED008F484C /* UIIMageView+Extension.swift */; };
 		30F3EDDB2A72C50B008F484C /* GenreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDDA2A72C50B008F484C /* GenreModel.swift */; };
+		30F3EDE12A730B34008F484C /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDE02A730B34008F484C /* DiscoverViewController.swift */; };
+		30F3EDE32A730B3D008F484C /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDE22A730B3D008F484C /* DiscoverViewModel.swift */; };
+		30F3EDE52A730B46008F484C /* DiscoverDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDE42A730B46008F484C /* DiscoverDataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		30F3EDD22A71E976008F484C /* EnvironmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentManager.swift; sourceTree = "<group>"; };
 		30F3EDD52A71FBED008F484C /* UIIMageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIIMageView+Extension.swift"; sourceTree = "<group>"; };
 		30F3EDDA2A72C50B008F484C /* GenreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreModel.swift; sourceTree = "<group>"; };
+		30F3EDE02A730B34008F484C /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
+		30F3EDE22A730B3D008F484C /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
+		30F3EDE42A730B46008F484C /* DiscoverDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverDataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +164,7 @@
 		30BF67E62A6D72B90078C8AE /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				30F3EDDC2A730B0D008F484C /* Discover */,
 				30BF67F42A6D73450078C8AE /* Bookmark */,
 				30BF67E82A6D72DE0078C8AE /* Home */,
 				30BF67ED2A6D73070078C8AE /* Tab Bar */,
@@ -232,6 +239,16 @@
 				30F3EDD52A71FBED008F484C /* UIIMageView+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		30F3EDDC2A730B0D008F484C /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				30F3EDE02A730B34008F484C /* DiscoverViewController.swift */,
+				30F3EDE22A730B3D008F484C /* DiscoverViewModel.swift */,
+				30F3EDE42A730B46008F484C /* DiscoverDataController.swift */,
+			);
+			path = Discover;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,13 +333,16 @@
 			files = (
 				30BF67F12A6D732C0078C8AE /* TabBarViewModel.swift in Sources */,
 				30F3EDD62A71FBED008F484C /* UIIMageView+Extension.swift in Sources */,
+				30F3EDE52A730B46008F484C /* DiscoverDataController.swift in Sources */,
 				30F3EDDB2A72C50B008F484C /* GenreModel.swift in Sources */,
+				30F3EDE32A730B3D008F484C /* DiscoverViewModel.swift in Sources */,
 				30BF67D72A6D66040078C8AE /* ListViewController.swift in Sources */,
 				30BF67D32A6D66040078C8AE /* AppDelegate.swift in Sources */,
 				30BF67D52A6D66040078C8AE /* SceneDelegate.swift in Sources */,
 				30BF67EF2A6D731A0078C8AE /* TabBarViewController.swift in Sources */,
 				30BF67FD2A6D86E70078C8AE /* ListCollectionViewCell.swift in Sources */,
 				30BF68002A6D89AB0078C8AE /* MovieModel.swift in Sources */,
+				30F3EDE12A730B34008F484C /* DiscoverViewController.swift in Sources */,
 				30BF67FA2A6D73670078C8AE /* BookmarksDataController.swift in Sources */,
 				30BF67EA2A6D72E80078C8AE /* ListViewModel.swift in Sources */,
 				30BF67F82A6D73600078C8AE /* BookmarksViewModel.swift in Sources */,

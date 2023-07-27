@@ -28,19 +28,26 @@ final class TabBarViewController: UITabBarController {
         setViewControllers([
             createViewController(tabViewController: ListViewController(),
                                  title: "List",
-                                 image: "house"),
+                                 defaultImage: "house",
+                                 selectedImage: "house.fill"),
+            createViewController(tabViewController: DiscoverViewController(),
+                                 title: "Discover",
+                                 defaultImage: "square.grid.2x2",
+                                 selectedImage: "square.grid.2x2.fill"),
             createViewController(tabViewController: BookmarksViewController(),
                                  title: "Bookmarks",
-                                 image: "bookmark"),
+                                 defaultImage: "bookmark",
+                                 selectedImage: "bookmark.fill"),
         ], animated: true)
     }
     
-    private func createViewController(tabViewController: UIViewController, title: String, image: String) -> UINavigationController {
+    private func createViewController(tabViewController: UIViewController, title: String, defaultImage: String, selectedImage: String) -> UINavigationController {
         tabViewController.view.backgroundColor = .systemBackground
         let navigationController = UINavigationController(rootViewController: tabViewController)
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.tabBarItem.title = title
-        navigationController.tabBarItem.image = UIImage(systemName: image)
+        navigationController.tabBarItem.image = UIImage(systemName: defaultImage)
+        navigationController.tabBarItem.selectedImage = UIImage(systemName: selectedImage)
         return navigationController
     }
 }
