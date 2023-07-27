@@ -11,6 +11,11 @@ final class ListViewController: UIViewController {
 
     private let viewModel = ListViewModel()
     
+    private let categoryList = [GenreModel(id: 1, name: "Now Playing"),
+                                GenreModel(id: 1, name: "Popular"),
+                                GenreModel(id: 1, name: "Top Rated"),
+                                GenreModel(id: 1, name: "Upcoming")]
+    
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
@@ -54,8 +59,13 @@ final class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
+        
         viewModel.fetchPopularMovies()
         viewModel.fetchTopRatedMovies()
+//        viewModel.fetchMoviesByGenres(genre: GenreModel(id: 18, name: "Action"))
+//        viewModel.fetchMoviesByGenres(genre: GenreModel(id: 12, name: "Adventure"))
+        viewModel.fetchGenres()
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = "Movie Archive"
@@ -95,6 +105,7 @@ final class ListViewController: UIViewController {
 }
 
 extension ListViewController: ListViewModelDelegate {
+    
     func popularMoviesFetched() {
         if viewModel.error != nil && viewModel.popularMovies.isEmpty {
             print("Error - \(String(describing: viewModel.error.debugDescription))")
@@ -113,6 +124,28 @@ extension ListViewController: ListViewModelDelegate {
         }
     }
     
+    func moviesByGenreFetched(_ genre: GenreModel) {
+        if viewModel.error != nil && viewModel.topRatedMovies.isEmpty {
+            print("Error - \(String(describing: viewModel.error.debugDescription))")
+        } else {
+//            print(genre)
+//            print(viewModel.moviesByGenre.count)
+//            for movie in viewModel.moviesByGenre {
+//                if movie.keys.contains(genre.name) {
+//                    print(movie)
+//                }
+//            }
+        }
+    }
+    
+    func genresFetched() {
+        if viewModel.error != nil && viewModel.genres.isEmpty {
+            print("Error - \(String(describing: viewModel.error.debugDescription))")
+        } else {
+            categoryCollectionView.reloadData()
+        }
+    }
+    
     func isLoading(_ state: Bool) {
         print("isLoading : \(state)")
     }
@@ -124,7 +157,7 @@ extension ListViewController: UISearchBarDelegate {
 
 extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView == listCollectionView ? viewModel.popularMovies.count : 10
+        return collectionView == listCollectionView ? viewModel.popularMovies.count : categoryList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -135,6 +168,7 @@ extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
         } else {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.reusableIdentifier, for: indexPath) as? CategoryCollectionViewCell {
+                cell.configureCell(genreModel: categoryList[indexPath.item])
                 return cell
             }
         }

@@ -13,33 +13,38 @@ protocol EndpointProtocol {
     var path: String { get }
     var method: Alamofire.HTTPMethod { get }
     var headers: HTTPHeaders { get }
-    
-    func request() -> DataRequest
+    func request(parameters: [String: Any]?) -> DataRequest
 }
 
 enum Endpoint {
     case getPopularMovies
     case getTopRatedMovies
+    case getGenres
+    case getMoviesByGenres
 }
 
 extension Endpoint: EndpointProtocol {
     
     var baseURL: String {
-        return "https://api.themoviedb.org/3/movie"
+        return "https://api.themoviedb.org/3/"
     }
     
     var path: String {
         switch self {
         case .getPopularMovies:
-            return "/popular"
+            return "movie/popular"
         case .getTopRatedMovies:
-            return "/top_rated"
+            return "movie/top_rated"
+        case .getGenres:
+            return "genre/movie/list"
+        case .getMoviesByGenres:
+            return "discover/movie"
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .getPopularMovies, .getTopRatedMovies:
+        case .getPopularMovies, .getTopRatedMovies, .getGenres, .getMoviesByGenres:
             return .get
         }
     }
@@ -52,7 +57,7 @@ extension Endpoint: EndpointProtocol {
         ]
     }
     
-    func request() -> DataRequest {
-        return AF.request("\(baseURL)\(path)", method: method, headers: headers)
+    func request(parameters: [String: Any]? = nil) -> DataRequest {
+        return AF.request("\(baseURL)\(path)", method: method, parameters: parameters, headers: headers)
     }
 }

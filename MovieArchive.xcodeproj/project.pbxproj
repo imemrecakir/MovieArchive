@@ -31,6 +31,7 @@
 		30F3EDD12A71E96B008F484C /* Environment.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30F3EDD02A71E96B008F484C /* Environment.plist */; };
 		30F3EDD32A71E976008F484C /* EnvironmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDD22A71E976008F484C /* EnvironmentManager.swift */; };
 		30F3EDD62A71FBED008F484C /* UIIMageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDD52A71FBED008F484C /* UIIMageView+Extension.swift */; };
+		30F3EDDB2A72C50B008F484C /* GenreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F3EDDA2A72C50B008F484C /* GenreModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		30F3EDD02A71E96B008F484C /* Environment.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Environment.plist; sourceTree = "<group>"; };
 		30F3EDD22A71E976008F484C /* EnvironmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentManager.swift; sourceTree = "<group>"; };
 		30F3EDD52A71FBED008F484C /* UIIMageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIIMageView+Extension.swift"; sourceTree = "<group>"; };
+		30F3EDDA2A72C50B008F484C /* GenreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 			isa = PBXGroup;
 			children = (
 				30BF67FF2A6D89AB0078C8AE /* MovieModel.swift */,
+				30F3EDDA2A72C50B008F484C /* GenreModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			files = (
 				30BF67F12A6D732C0078C8AE /* TabBarViewModel.swift in Sources */,
 				30F3EDD62A71FBED008F484C /* UIIMageView+Extension.swift in Sources */,
+				30F3EDDB2A72C50B008F484C /* GenreModel.swift in Sources */,
 				30BF67D72A6D66040078C8AE /* ListViewController.swift in Sources */,
 				30BF67D32A6D66040078C8AE /* AppDelegate.swift in Sources */,
 				30BF67D52A6D66040078C8AE /* SceneDelegate.swift in Sources */,
@@ -475,6 +479,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -503,6 +508,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (

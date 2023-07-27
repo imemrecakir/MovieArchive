@@ -19,7 +19,7 @@ final class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBar.tintColor = .label
-        tabBar.unselectedItemTintColor = .secondaryLabel
+        tabBar.unselectedItemTintColor = .tertiaryLabel
         tabBar.layer.addSublayer(seperator)
         setupTabs()
     }

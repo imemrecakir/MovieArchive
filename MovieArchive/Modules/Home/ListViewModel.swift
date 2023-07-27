@@ -10,6 +10,8 @@ import Foundation
 protocol ListViewModelDelegate: AnyObject {
     func popularMoviesFetched()
     func topRatedMoviesFetched()
+    func moviesByGenreFetched(_ genre: GenreModel)
+    func genresFetched()
     func isLoading(_ state: Bool)
 }
 
@@ -19,6 +21,8 @@ final class ListViewModel {
     
     var popularMovies: [MovieResultModel] = []
     var topRatedMovies: [MovieResultModel] = []
+    var moviesByGenre = Set<[String: [MovieResultModel]]>()
+    var genres: [GenreModel] = []
     var error: Error? = nil
     
     func fetchPopularMovies() {
@@ -51,7 +55,39 @@ final class ListViewModel {
                 self?.delegate?.topRatedMoviesFetched()
                 self?.delegate?.isLoading(false)
             }
+        }
+    }
+    
+    func fetchMoviesByGenres(genre: GenreModel) {
+        delegate?.isLoading(true)
+        dataController.fetchMoviesByGenres(genres: "\(genre.id)") { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.moviesByGenre.insert([genre.name: response.results])
+                self?.delegate?.moviesByGenreFetched(genre)
+                self?.delegate?.isLoading(false)
+            case .failure(let error):
+                self?.error = error
+                self?.delegate?.moviesByGenreFetched(genre)
+                self?.delegate?.isLoading(false)
+            }
             
+        }
+    }
+    
+    func fetchGenres() {
+        delegate?.isLoading(true)
+        dataController.fetchGenres { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.genres = response.genres
+                self?.delegate?.genresFetched()
+                self?.delegate?.isLoading(false)
+            case .failure(let error):
+                self?.error = error
+                self?.delegate?.genresFetched()
+                self?.delegate?.isLoading(false)
+            }
         }
     }
 }

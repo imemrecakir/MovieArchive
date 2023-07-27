@@ -10,7 +10,7 @@ import UIKit
 final class CategoryCollectionViewCell: UICollectionViewCell {
     
     static let reusableIdentifier = "CategoryCollectionViewCell"
-
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -42,8 +42,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         ])
     }
     
-    //    func configureCell(movieModel: MovieResultModel) {
-    //        titleLabel.text = movieModel.title
-    //    }
-
+    func configureCell(genreModel: GenreModel) {
+        titleLabel.text = genreModel.name
+    }
 }
