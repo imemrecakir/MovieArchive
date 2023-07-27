@@ -8,6 +8,8 @@
 import UIKit
 
 final class ListViewController: UIViewController {
+
+    private let viewModel = ListViewModel()
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -51,9 +53,13 @@ final class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewModel.delegate = self
+        viewModel.fetchPopularMovies()
+        viewModel.fetchTopRatedMovies()
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationItem.title = "Movie Archive"
+        
         setupUI()
         setupConstraints()
     }
@@ -88,18 +94,43 @@ final class ListViewController: UIViewController {
     }
 }
 
+extension ListViewController: ListViewModelDelegate {
+    func popularMoviesFetched() {
+        if viewModel.error != nil && viewModel.popularMovies.isEmpty {
+            print("Error - \(String(describing: viewModel.error.debugDescription))")
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                self?.listCollectionView.reloadData()
+            }
+        }
+    }
+    
+    func topRatedMoviesFetched() {
+        if viewModel.error != nil && viewModel.topRatedMovies.isEmpty {
+            print("Error - \(String(describing: viewModel.error.debugDescription))")
+        } else {
+            // Update collectionView
+        }
+    }
+    
+    func isLoading(_ state: Bool) {
+        print("isLoading : \(state)")
+    }
+}
+
 extension ListViewController: UISearchBarDelegate {
     
 }
 
 extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return collectionView == listCollectionView ? 20 : 10
+        return collectionView == listCollectionView ? viewModel.popularMovies.count : 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == listCollectionView {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.reusableIdentifier, for: indexPath) as? ListCollectionViewCell {
+                cell.configureCell(movieModel: viewModel.popularMovies[indexPath.item])
                 return cell
             }
         } else {

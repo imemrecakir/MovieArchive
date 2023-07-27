@@ -11,8 +11,9 @@ import Alamofire
 final class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
-    private func request<T: Codable>(_ endpoint: Endpoint, completion: @escaping (Result<T, Error>) -> Void) {
 
+    func request<T: Decodable>(_ endpoint: Endpoint, completion: @escaping (Result<T, Error>) -> Void) {
+        
         endpoint.request().response { response in
             if let error = response.error {
                 completion(.failure(error))

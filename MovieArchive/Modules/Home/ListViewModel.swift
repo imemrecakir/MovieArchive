@@ -6,3 +6,52 @@
 //
 
 import Foundation
+
+protocol ListViewModelDelegate: AnyObject {
+    func popularMoviesFetched()
+    func topRatedMoviesFetched()
+    func isLoading(_ state: Bool)
+}
+
+final class ListViewModel {
+    weak var delegate: ListViewModelDelegate?
+    private let dataController: ListDataControllerProtocol = ListDataController()
+    
+    var popularMovies: [MovieResultModel] = []
+    var topRatedMovies: [MovieResultModel] = []
+    var error: Error? = nil
+    
+    func fetchPopularMovies() {
+        delegate?.isLoading(true)
+        dataController.fetchPopularMovies { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.popularMovies = response.results
+                self?.delegate?.popularMoviesFetched()
+                self?.delegate?.isLoading(false)
+            case .failure(let error):
+                self?.error = error
+                self?.delegate?.popularMoviesFetched()
+                self?.delegate?.isLoading(false)
+            }
+            
+        }
+    }
+    
+    func fetchTopRatedMovies() {
+        delegate?.isLoading(true)
+        dataController.fetchTopRatedMovies { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.topRatedMovies = response.results
+                self?.delegate?.topRatedMoviesFetched()
+                self?.delegate?.isLoading(false)
+            case .failure(let error):
+                self?.error = error
+                self?.delegate?.topRatedMoviesFetched()
+                self?.delegate?.isLoading(false)
+            }
+            
+        }
+    }
+}

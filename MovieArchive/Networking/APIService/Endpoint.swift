@@ -45,7 +45,7 @@ extension Endpoint: EndpointProtocol {
     }
     
     var headers: HTTPHeaders {
-        let apiKey = EnvironmentManager.shared.getAPIKey()
+        let apiKey = EnvironmentManager.shared.getAccessToken()
         return [
           "accept": "application/json",
           "Authorization": "Bearer \(apiKey)"
