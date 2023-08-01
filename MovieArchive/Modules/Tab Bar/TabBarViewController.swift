@@ -26,15 +26,15 @@ final class TabBarViewController: UITabBarController {
     
     private func setupTabs() {
         setViewControllers([
-            createViewController(tabViewController: ListViewController(viewModel: ListViewModel()),
+            createViewController(tabViewController: ListViewController(),
                                  title: "List",
                                  defaultImage: "house",
                                  selectedImage: "house.fill"),
-            createViewController(tabViewController: DiscoverViewController(viewModel: DiscoverViewModel()),
+            createViewController(tabViewController: DiscoverViewController(),
                                  title: "Discover",
                                  defaultImage: "square.grid.2x2",
                                  selectedImage: "square.grid.2x2.fill"),
-            createViewController(tabViewController: BookmarksViewController(viewModel: BookmarksViewModel()),
+            createViewController(tabViewController: BookmarksViewController(),
                                  title: "Bookmarks",
                                  defaultImage: "bookmark",
                                  selectedImage: "bookmark.fill"),

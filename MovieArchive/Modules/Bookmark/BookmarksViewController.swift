@@ -10,7 +10,7 @@ import Kingfisher
 
 final class BookmarksViewController: UIViewController {
     
-    private let viewModel: BookmarksViewModel
+    private let viewModel = BookmarksViewModel()
     
     private lazy var listCollectionView: UICollectionView = {
         let layout = UICollectionViewLayout()
@@ -24,21 +24,18 @@ final class BookmarksViewController: UIViewController {
         return collectionView
     }()
     
-    init(viewModel: BookmarksViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        viewModel.delegate = self
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupUI()
+        setupConstraints()
+    }
+    
+    private func setupUI() {
+        viewModel.delegate = self
         view.addSubview(listCollectionView)
-        
+    }
+    
+    private func setupConstraints() {
         NSLayoutConstraint.activate([
             listCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),

@@ -9,7 +9,7 @@ import UIKit
 
 final class ListViewController: UIViewController {
     
-    private let viewModel: ListViewModel
+    private let viewModel = ListViewModel()
     
     private lazy var listCollectionView: UICollectionView = {
         let layout = createCompositionalLayout()
@@ -23,25 +23,7 @@ final class ListViewController: UIViewController {
         collectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: ListCollectionViewCell.reusableIdentifier)
         return collectionView
     }()
-    
-    init(viewModel: ListViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        viewModel.delegate = self
-        
-        viewModel.fetchNowPlayingMovies()
-        viewModel.fetchPopularMovies()
-        viewModel.fetchTopRatedMovies()
-        viewModel.fetchUpcomingMovies()
-        //        viewModel.fetchMoviesByGenres(genre: GenreModel(id: 18, name: "Action"))
-        //        viewModel.fetchMoviesByGenres(genre: GenreModel(id: 12, name: "Adventure"))
-        //        viewModel.fetchGenres()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -49,6 +31,11 @@ final class ListViewController: UIViewController {
     }
     
     private func setupUI() {
+        viewModel.delegate = self
+        viewModel.fetchNowPlayingMovies()
+        viewModel.fetchPopularMovies()
+        viewModel.fetchTopRatedMovies()
+        viewModel.fetchUpcomingMovies()
         view.addSubview(listCollectionView)
     }
     
