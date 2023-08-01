@@ -12,7 +12,7 @@ final class ListCollectionViewCell: UICollectionViewCell {
     
     static let reusableIdentifier = "ListCollectionViewCell"
     
-    private lazy var movieImageView: UIImageView = {
+    private let movieImageView: UIImageView = {
         let movieImageView = UIImageView()
         movieImageView.translatesAutoresizingMaskIntoConstraints = false
         movieImageView.layer.cornerRadius = 12

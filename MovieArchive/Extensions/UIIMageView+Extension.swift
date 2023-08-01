@@ -12,6 +12,7 @@ extension UIImageView {
     private var baseImageURL: String {
        return "https://image.tmdb.org/t/p/original"
     }
+    
     func setImage(with imageEndpoint: String, placeholder: String) {
         let url = URL(string: "\(baseImageURL)\(imageEndpoint)")
         let placeholderImage = UIImage(systemName: placeholder)?.withTintColor(.label, renderingMode: .alwaysOriginal)
