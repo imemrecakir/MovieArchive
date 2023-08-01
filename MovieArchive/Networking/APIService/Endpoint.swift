@@ -17,10 +17,12 @@ protocol EndpointProtocol {
 }
 
 enum Endpoint {
+    case getNowPlayingMovies
     case getPopularMovies
     case getTopRatedMovies
-    case getGenres
-    case getMoviesByGenres
+    case getUpcomingMovies
+    //    case getGenres
+    //    case getMoviesByGenres
 }
 
 extension Endpoint: EndpointProtocol {
@@ -31,29 +33,33 @@ extension Endpoint: EndpointProtocol {
     
     var path: String {
         switch self {
+        case .getNowPlayingMovies:
+            return "movie/now_playing"
         case .getPopularMovies:
             return "movie/popular"
         case .getTopRatedMovies:
             return "movie/top_rated"
-        case .getGenres:
-            return "genre/movie/list"
-        case .getMoviesByGenres:
-            return "discover/movie"
+        case .getUpcomingMovies:
+            return "movie/upcoming"
+            //        case .getGenres:
+            //            return "genre/movie/list"
+            //        case .getMoviesByGenres:
+            //            return "discover/movie"
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .getPopularMovies, .getTopRatedMovies, .getGenres, .getMoviesByGenres:
+        case .getNowPlayingMovies, .getPopularMovies, .getTopRatedMovies, .getUpcomingMovies:
             return .get
         }
     }
     
     var headers: HTTPHeaders {
-        let apiKey = EnvironmentManager.shared.getAccessToken()
+        let token = EnvironmentManager.shared.getAccessToken()
         return [
-          "accept": "application/json",
-          "Authorization": "Bearer \(apiKey)"
+            "accept": "application/json",
+            "Authorization": "Bearer \(token)"
         ]
     }
     
@@ -61,3 +67,4 @@ extension Endpoint: EndpointProtocol {
         return AF.request("\(baseURL)\(path)", method: method, parameters: parameters, headers: headers)
     }
 }
+

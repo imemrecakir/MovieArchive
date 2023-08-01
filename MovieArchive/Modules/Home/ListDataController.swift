@@ -8,14 +8,19 @@
 import Foundation
 
 protocol ListDataControllerProtocol {
+    func fetchNowPlayingMovies(completion: @escaping (Result<MovieModel, Error>) -> Void)
     func fetchPopularMovies(completion: @escaping (Result<MovieModel, Error>) -> Void)
     func fetchTopRatedMovies(completion: @escaping (Result<MovieModel, Error>) -> Void)
-    func fetchMoviesByGenres(genres: String, completion: @escaping (Result<MovieModel, Error>) -> Void)
-    func fetchGenres(completion: @escaping (Result<GenreListModel, Error>) -> Void)
+    func fetchUpcomingMovies(completion: @escaping (Result<MovieModel, Error>) -> Void)
 }
 
 final class ListDataController: ListDataControllerProtocol {
   
+    func fetchNowPlayingMovies(completion: @escaping (Result<MovieModel, Error>) -> Void) {
+        let endpoint = Endpoint.getNowPlayingMovies
+        NetworkManager.shared.request(endpoint.request(), completion: completion)
+    }
+    
     func fetchPopularMovies(completion: @escaping (Result<MovieModel, Error>) -> Void) {
         let endpoint = Endpoint.getPopularMovies
         NetworkManager.shared.request(endpoint.request(), completion: completion)
@@ -26,16 +31,8 @@ final class ListDataController: ListDataControllerProtocol {
         NetworkManager.shared.request(endpoint.request(), completion: completion)
     }
     
-    func fetchMoviesByGenres(genres: String, completion: @escaping (Result<MovieModel, Error>) -> Void) {
-        let endpoint = Endpoint.getMoviesByGenres
-        let parameters: [String: Any] = [
-            "with_genres": genres
-        ]
-        NetworkManager.shared.request(endpoint.request(parameters: parameters), completion: completion)
-    }
-    
-    func fetchGenres(completion: @escaping (Result<GenreListModel, Error>) -> Void) {
-        let endpoint = Endpoint.getGenres
+    func fetchUpcomingMovies(completion: @escaping (Result<MovieModel, Error>) -> Void) {
+        let endpoint = Endpoint.getUpcomingMovies
         NetworkManager.shared.request(endpoint.request(), completion: completion)
     }
 }

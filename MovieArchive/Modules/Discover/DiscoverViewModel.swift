@@ -7,9 +7,7 @@
 
 import Foundation
 
-protocol DiscoverViewModelDelegate: AnyObject {
-    
-}
+protocol DiscoverViewModelDelegate: AnyObject {}
 
 final class DiscoverViewModel {
     weak var delegate: DiscoverViewModelDelegate?

@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol DiscoverDataProtocol {
-    
-}
+protocol DiscoverDataProtocol {}
 
-final class DiscoverDataController: DiscoverDataProtocol {
-    
-}
+final class DiscoverDataController: DiscoverDataProtocol {}

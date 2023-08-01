@@ -12,24 +12,14 @@ final class ListCollectionViewCell: UICollectionViewCell {
     
     static let reusableIdentifier = "ListCollectionViewCell"
     
-    private let movieImageView: UIImageView = {
+    private lazy var movieImageView: UIImageView = {
         let movieImageView = UIImageView()
-        movieImageView.contentMode = .scaleAspectFill
         movieImageView.translatesAutoresizingMaskIntoConstraints = false
+        movieImageView.layer.cornerRadius = 12
         movieImageView.clipsToBounds = true
-        movieImageView.image = UIImage(systemName: "popcorn")
-        movieImageView.layer.cornerRadius = 24
+        movieImageView.layer.masksToBounds = true
+        movieImageView.contentMode = .redraw
         return movieImageView
-    }()
-    
-    private let movieTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Title (2022)"
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 15)
-        return label
     }()
     
     override init(frame: CGRect) {
@@ -44,25 +34,18 @@ final class ListCollectionViewCell: UICollectionViewCell {
     
     private func setupUI() {
         contentView.addSubview(movieImageView)
-        contentView.addSubview(movieTitleLabel)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            movieImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            movieImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             movieImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            movieImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            movieImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.8),
-            
-            movieTitleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
-            movieTitleLabel.topAnchor.constraint(equalTo: movieImageView.bottomAnchor),
-            movieTitleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-            movieTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            movieImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            movieImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
     func configureCell(movieModel: MovieResultModel) {
-        movieTitleLabel.text = movieModel.title
-        movieImageView.setImage(with: movieModel.backdropPath, placeholder: "popcorn")
+        movieImageView.setImage(with: movieModel.posterPath, placeholder: "popcorn")
     }
 }

@@ -8,10 +8,10 @@
 import Foundation
 
 protocol ListViewModelDelegate: AnyObject {
+    func nowPlayingMoviesFetched()
     func popularMoviesFetched()
     func topRatedMoviesFetched()
-    func moviesByGenreFetched(_ genre: GenreModel)
-    func genresFetched()
+    func upcomingMoviesFetched()
     func isLoading(_ state: Bool)
 }
 
@@ -19,11 +19,28 @@ final class ListViewModel {
     weak var delegate: ListViewModelDelegate?
     private let dataController: ListDataControllerProtocol = ListDataController()
     
+    let categoryList = ["Now Playing", "Popular", "Top Rated", "Upcoming"]
+    var nowPlayingMovies: [MovieResultModel] = []
     var popularMovies: [MovieResultModel] = []
     var topRatedMovies: [MovieResultModel] = []
-    var moviesByGenre = Set<[String: [MovieResultModel]]>()
-    var genres: [GenreModel] = []
+    var upcomingMovies: [MovieResultModel] = []
     var error: Error? = nil
+    
+    func fetchNowPlayingMovies() {
+        delegate?.isLoading(true)
+        dataController.fetchNowPlayingMovies { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.nowPlayingMovies = response.results
+                self?.delegate?.nowPlayingMoviesFetched()
+                self?.delegate?.isLoading(false)
+            case .failure(let error):
+                self?.error = error
+                self?.delegate?.nowPlayingMoviesFetched()
+                self?.delegate?.isLoading(false)
+            }
+        }
+    }
     
     func fetchPopularMovies() {
         delegate?.isLoading(true)
@@ -38,7 +55,6 @@ final class ListViewModel {
                 self?.delegate?.popularMoviesFetched()
                 self?.delegate?.isLoading(false)
             }
-            
         }
     }
     
@@ -58,34 +74,17 @@ final class ListViewModel {
         }
     }
     
-    func fetchMoviesByGenres(genre: GenreModel) {
+    func fetchUpcomingMovies() {
         delegate?.isLoading(true)
-        dataController.fetchMoviesByGenres(genres: "\(genre.id)") { [weak self] result in
+        dataController.fetchUpcomingMovies { [weak self] result in
             switch result {
             case .success(let response):
-                self?.moviesByGenre.insert([genre.name: response.results])
-                self?.delegate?.moviesByGenreFetched(genre)
+                self?.upcomingMovies = response.results
+                self?.delegate?.upcomingMoviesFetched()
                 self?.delegate?.isLoading(false)
             case .failure(let error):
                 self?.error = error
-                self?.delegate?.moviesByGenreFetched(genre)
-                self?.delegate?.isLoading(false)
-            }
-            
-        }
-    }
-    
-    func fetchGenres() {
-        delegate?.isLoading(true)
-        dataController.fetchGenres { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.genres = response.genres
-                self?.delegate?.genresFetched()
-                self?.delegate?.isLoading(false)
-            case .failure(let error):
-                self?.error = error
-                self?.delegate?.genresFetched()
+                self?.delegate?.upcomingMoviesFetched()
                 self?.delegate?.isLoading(false)
             }
         }

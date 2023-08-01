@@ -10,6 +10,8 @@ import Kingfisher
 
 final class BookmarksViewController: UIViewController {
     
+    private let viewModel: BookmarksViewModel
+    
     private lazy var listCollectionView: UICollectionView = {
         let layout = UICollectionViewLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -17,9 +19,20 @@ final class BookmarksViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = .red
         collectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: ListCollectionViewCell.reusableIdentifier)
         return collectionView
     }()
+    
+    init(viewModel: BookmarksViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        viewModel.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +47,8 @@ final class BookmarksViewController: UIViewController {
         ])
     }
 }
+
+extension BookmarksViewController: BookmarksViewModelDelegate {}
 
 extension BookmarksViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

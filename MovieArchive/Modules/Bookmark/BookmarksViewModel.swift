@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+protocol BookmarksViewModelDelegate: AnyObject {}
+
+final class BookmarksViewModel{
+    weak var delegate: BookmarksViewModelDelegate?
+}

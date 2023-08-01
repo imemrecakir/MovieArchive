@@ -26,15 +26,15 @@ final class TabBarViewController: UITabBarController {
     
     private func setupTabs() {
         setViewControllers([
-            createViewController(tabViewController: ListViewController(),
+            createViewController(tabViewController: ListViewController(viewModel: ListViewModel()),
                                  title: "List",
                                  defaultImage: "house",
                                  selectedImage: "house.fill"),
-            createViewController(tabViewController: DiscoverViewController(),
+            createViewController(tabViewController: DiscoverViewController(viewModel: DiscoverViewModel()),
                                  title: "Discover",
                                  defaultImage: "square.grid.2x2",
                                  selectedImage: "square.grid.2x2.fill"),
-            createViewController(tabViewController: BookmarksViewController(),
+            createViewController(tabViewController: BookmarksViewController(viewModel: BookmarksViewModel()),
                                  title: "Bookmarks",
                                  defaultImage: "bookmark",
                                  selectedImage: "bookmark.fill"),
@@ -42,9 +42,9 @@ final class TabBarViewController: UITabBarController {
     }
     
     private func createViewController(tabViewController: UIViewController, title: String, defaultImage: String, selectedImage: String) -> UINavigationController {
-        tabViewController.view.backgroundColor = .systemBackground
+        tabViewController.view.backgroundColor = .secondarySystemBackground
         let navigationController = UINavigationController(rootViewController: tabViewController)
-        navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.navigationBar.isHidden = true
         navigationController.tabBarItem.title = title
         navigationController.tabBarItem.image = UIImage(systemName: defaultImage)
         navigationController.tabBarItem.selectedImage = UIImage(systemName: selectedImage)
