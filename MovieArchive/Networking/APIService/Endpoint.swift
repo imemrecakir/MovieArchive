@@ -21,6 +21,7 @@ enum Endpoint {
     case getPopularMovies
     case getTopRatedMovies
     case getUpcomingMovies
+    case getMovieDetail
     //    case getGenres
     //    case getMoviesByGenres
 }
@@ -41,16 +42,14 @@ extension Endpoint: EndpointProtocol {
             return "movie/top_rated"
         case .getUpcomingMovies:
             return "movie/upcoming"
-            //        case .getGenres:
-            //            return "genre/movie/list"
-            //        case .getMoviesByGenres:
-            //            return "discover/movie"
+        case .getMovieDetail:
+            return "movie/"
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .getNowPlayingMovies, .getPopularMovies, .getTopRatedMovies, .getUpcomingMovies:
+        case .getNowPlayingMovies, .getPopularMovies, .getTopRatedMovies, .getUpcomingMovies, .getMovieDetail:
             return .get
         }
     }
@@ -65,6 +64,10 @@ extension Endpoint: EndpointProtocol {
     
     func request(parameters: [String: Any]? = nil) -> DataRequest {
         return AF.request("\(baseURL)\(path)", method: method, parameters: parameters, headers: headers)
+    }
+    
+    func request(with pathParameter: Any) -> DataRequest {
+        return AF.request("\(baseURL)\(path)\(pathParameter)", method: method, headers: headers)
     }
 }
 

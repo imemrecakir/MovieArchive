@@ -234,4 +234,29 @@ extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         return UICollectionViewCell()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailViewController = DetailViewController()
+
+        var movieID = 0
+        switch indexPath.section {
+        case 0:
+            movieID = viewModel.nowPlayingMovies[indexPath.item].id
+            break
+        case 1:
+            movieID = viewModel.popularMovies[indexPath.item].id
+            break
+        case 2:
+            movieID = viewModel.topRatedMovies[indexPath.item].id
+            break
+        case 3:
+            movieID = viewModel.upcomingMovies[indexPath.item].id
+            break
+        default: break
+        }
+        
+        detailViewController.movieID = movieID
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }

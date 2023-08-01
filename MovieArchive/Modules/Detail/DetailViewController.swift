@@ -10,7 +10,7 @@ import UIKit
 class DetailViewController: UIViewController {
 
     private let viewModel = DetailViewModel()
-    private var movieID: Int = 0 {
+    var movieID: Int = 0 {
         didSet {
             viewModel.fetchMovieDetail(movieID: movieID)
         }
@@ -18,12 +18,29 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        setupConstraints()
+    }
+    
+    private func setupUI() {
         viewModel.delegate = self
+        viewModel.fetchMovieDetail(movieID: movieID)
+        print(movieID)
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.hidesBackButton = false
+        navigationItem.backButtonTitle = "Back"
+    }
+    
+    private func setupConstraints() {
+        
     }
 }
 
 extension DetailViewController: DetailViewModelDelegate {
     func movieDetailFetched() {
-        
+    }
+    
+    func isLoading(_ state: Bool) {
+        print(state)
     }
 }

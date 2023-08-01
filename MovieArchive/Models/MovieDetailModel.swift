@@ -6,13 +6,19 @@
 //
 
 import Foundation
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
+//
+//   let movieDetailModel = try? JSONDecoder().decode(MovieDetailModel.self, from: jsonData)
+
+import Foundation
 
 struct MovieDetailModel: Codable {
     let adult: Bool
     let backdropPath: String
-    let belongsToCollection: JSONNull?
+    let belongsToCollection: BelongsToCollection?
     let budget: Int
-    let genres: [GenreModel]
+    let genres: [Genre]
     let homepage: String
     let id: Int
     let imdbID, originalLanguage, originalTitle, overview: String
@@ -27,7 +33,7 @@ struct MovieDetailModel: Codable {
     let video: Bool
     let voteAverage: Double
     let voteCount: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case adult
         case backdropPath = "backdrop_path"
@@ -49,11 +55,27 @@ struct MovieDetailModel: Codable {
     }
 }
 
+struct BelongsToCollection: Codable {
+    let id: Int
+    let name, posterPath, backdropPath: String
+
+    enum CodingKeys: String, CodingKey {
+        case id, name
+        case posterPath = "poster_path"
+        case backdropPath = "backdrop_path"
+    }
+}
+
+struct Genre: Codable {
+    let id: Int
+    let name: String
+}
+
 struct ProductionCompany: Codable {
     let id: Int
     let logoPath: String?
     let name, originCountry: String
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case logoPath = "logo_path"
@@ -64,7 +86,7 @@ struct ProductionCompany: Codable {
 
 struct ProductionCountry: Codable {
     let iso3166_1, name: String
-    
+
     enum CodingKeys: String, CodingKey {
         case iso3166_1 = "iso_3166_1"
         case name
@@ -73,35 +95,10 @@ struct ProductionCountry: Codable {
 
 struct SpokenLanguage: Codable {
     let englishName, iso639_1, name: String
-    
+
     enum CodingKeys: String, CodingKey {
         case englishName = "english_name"
         case iso639_1 = "iso_639_1"
         case name
-    }
-}
-
-class JSONNull: Codable, Hashable {
-    
-    public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
-        return true
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(0)
-    }
-    
-    public init() {}
-    
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        if !container.decodeNil() {
-            throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
-        }
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encodeNil()
     }
 }
