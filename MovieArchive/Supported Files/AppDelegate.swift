@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        setNavigationBarStyle()
         return true
     }
 
@@ -25,12 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {}
+
+    func setNavigationBarStyle() {
+        let appearance = UINavigationBarAppearance()
+        
+        let backButtonImage = UIImage(systemName: "arrow.left.circle")?
+            .withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -6, bottom: -2, right: 0))
+        
+        appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
+        appearance.backButtonAppearance.configureWithDefault(for: .done)
+        UINavigationBar.appearance().standardAppearance = appearance
     }
-
-
 }
 

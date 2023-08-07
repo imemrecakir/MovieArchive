@@ -232,13 +232,11 @@ extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         }
         
-        return UICollectionViewCell()
+        return ListCollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let detailViewController = DetailViewController()
-
         var movieID = 0
         switch indexPath.section {
         case 0:
@@ -256,6 +254,7 @@ extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSour
         default: break
         }
         
+        let detailViewController = DetailViewController()
         detailViewController.movieID = movieID
         navigationController?.pushViewController(detailViewController, animated: true)
     }

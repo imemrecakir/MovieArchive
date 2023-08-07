@@ -8,8 +8,8 @@
 import UIKit
 import Kingfisher
 
-class DetailViewController: UIViewController {
-
+final class DetailViewController: UIViewController {
+    
     private let viewModel = DetailViewModel()
     
     var movieID: Int = 0 {
@@ -19,7 +19,7 @@ class DetailViewController: UIViewController {
     }
     
     private let scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -29,80 +29,141 @@ class DetailViewController: UIViewController {
     }()
     
     private let scrollContentView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private let topContainerView: UIView = {
-       let view = UIView()
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let backdropImageView: UIImageView = {
-      let imageView = UIImageView()
+    private let movieImageView: UIImageView = {
+        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 24
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .redraw
-        imageView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        imageView.contentMode = .scaleAspectFill
         imageView.image = UIImage(systemName: "popcorn")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         return imageView
     }()
     
-    private let posterImageView: UIImageView = {
-      let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.contentMode = .redraw
-        imageView.image = UIImage(systemName: "popcorn")?.withTintColor(.label, renderingMode: .alwaysOriginal)
-        return imageView
+    private let infosStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.spacing = 10
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        stackView.isLayoutMarginsRelativeArrangement = true
+        return stackView
     }()
     
-    private let bookmarkImageView: UIImageView = {
-      let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 12
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.layer.borderColor = UIColor.secondaryLabel.cgColor
-        imageView.layer.borderWidth = 0.75
+    private let voteStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        return stackView
+    }()
+    
+    private let voteImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "star.fill")?.withTintColor(.systemYellow, renderingMode: .alwaysOriginal)
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: "bookmark")?.withTintColor(.label, renderingMode: .alwaysOriginal)
-        imageView.backgroundColor = .secondarySystemBackground
+        imageView.setContentHuggingPriority(.required, for: .horizontal)
         return imageView
     }()
     
-    private let infosContainerView: UIView = {
-       let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    private let voteAverageLabel: UILabel = {
+        let label = UILabel()
+        label.font = .boldSystemFont(ofSize: 22)
+        label.textColor = .systemYellow
+        label.setContentHuggingPriority(.required, for: .horizontal)
+        return label
     }()
-
+    
+    private let voteReviewsLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        label.textColor = .label
+        return label
+    }()
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .boldSystemFont(ofSize: 28)
+        label.textColor = .label
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
+    
+    private lazy var genreCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 20
+        layout.minimumLineSpacing = 20
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(GenreCollectionViewCell.self, forCellWithReuseIdentifier: GenreCollectionViewCell.reusableIdentifier)
+        return collectionView
+    }()
+    
+    private let overviewLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        label.textColor = .tertiaryLabel
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        genreCollectionView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
+        genreCollectionView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = false
+        navigationController?.navigationBar.isHidden = true
+        super.viewWillDisappear(animated)
     }
     
     private func setupUI() {
         view.backgroundColor = .secondarySystemBackground
+        tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = false
         viewModel.delegate = self
-        viewModel.fetchMovieDetail(movieID: movieID)
         
         scrollView.addSubview(scrollContentView)
         view.addSubview(scrollView)
         
-        topContainerView.addSubview(backdropImageView)
-        topContainerView.addSubview(posterImageView)
-        topContainerView.addSubview(bookmarkImageView)
+        topContainerView.addSubview(movieImageView)
         scrollContentView.addSubview(topContainerView)
-        scrollContentView.addSubview(infosContainerView)
+        
+        voteStackView.addArrangedSubview(voteImage)
+        voteStackView.addArrangedSubview(voteAverageLabel)
+        voteStackView.addArrangedSubview(voteReviewsLabel)
+        
+        infosStackView.addArrangedSubview(voteStackView)
+        infosStackView.addArrangedSubview(titleLabel)
+        infosStackView.addArrangedSubview(genreCollectionView)
+        infosStackView.addArrangedSubview(overviewLabel)
+        scrollContentView.addSubview(infosStackView)
     }
     
     private func setupConstraints() {
@@ -122,28 +183,19 @@ class DetailViewController: UIViewController {
             topContainerView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
             topContainerView.topAnchor.constraint(equalTo: scrollContentView.topAnchor),
             topContainerView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
-            topContainerView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.40),
+            topContainerView.heightAnchor.constraint(equalTo: scrollContentView.heightAnchor, multiplier: 0.5),
+            topContainerView.bottomAnchor.constraint(equalTo: infosStackView.topAnchor, constant: -20),
             
-            backdropImageView.leadingAnchor.constraint(equalTo: topContainerView.leadingAnchor),
-            backdropImageView.topAnchor.constraint(equalTo: topContainerView.topAnchor),
-            backdropImageView.trailingAnchor.constraint(equalTo: topContainerView.trailingAnchor),
-            backdropImageView.bottomAnchor.constraint(equalTo: topContainerView.bottomAnchor, constant: -(view.frame.height * 0.4) * 0.15),
+            movieImageView.leadingAnchor.constraint(equalTo: topContainerView.leadingAnchor),
+            movieImageView.topAnchor.constraint(equalTo: topContainerView.topAnchor),
+            movieImageView.trailingAnchor.constraint(equalTo: topContainerView.trailingAnchor),
+            movieImageView.bottomAnchor.constraint(equalTo: topContainerView.bottomAnchor),
             
-            posterImageView.leadingAnchor.constraint(equalTo: topContainerView.leadingAnchor, constant: 32),
-//            posterImageView.topAnchor.constraint(equalTo: topContainerView.topAnchor, constant: view.frame.height * 0.4 * 0.25),
-            posterImageView.bottomAnchor.constraint(equalTo: topContainerView.bottomAnchor),
-            posterImageView.widthAnchor.constraint(equalTo: topContainerView.widthAnchor, multiplier: 0.4),
-            posterImageView.heightAnchor.constraint(equalTo: topContainerView.heightAnchor, multiplier: 0.6f),
+            infosStackView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
+            infosStackView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
+            infosStackView.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor),
             
-            bookmarkImageView.trailingAnchor.constraint(equalTo: topContainerView.trailingAnchor, constant: -32),
-            bookmarkImageView.bottomAnchor.constraint(equalTo: topContainerView.bottomAnchor, constant: -(view.frame.height * 0.4 * 0.05)),
-            bookmarkImageView.heightAnchor.constraint(equalToConstant: 60),
-            bookmarkImageView.widthAnchor.constraint(equalToConstant: 60),
-            
-            infosContainerView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
-            infosContainerView.topAnchor.constraint(equalTo: topContainerView.bottomAnchor),
-            infosContainerView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
-            infosContainerView.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor)
+            genreCollectionView.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 }
@@ -151,14 +203,43 @@ class DetailViewController: UIViewController {
 extension DetailViewController: DetailViewModelDelegate {
     func movieDetailFetched() {
         if let movieDetail = viewModel.movieDetail {
-            backdropImageView.setImage(with: movieDetail.backdropPath, placeholder: "popcorn")
-            posterImageView.setImage(with: movieDetail.posterPath, placeholder: "popcorn")
+            movieImageView.setImage(with: movieDetail.backdropPath, placeholder: "popcorn")
+            voteAverageLabel.text = "\(String(format: "%.2f", movieDetail.voteAverage))"
+            if movieDetail.voteCount >= 1000 {
+                voteReviewsLabel.text = "(\((movieDetail.voteCount / 1000))k reviews)"
+            } else {
+                voteReviewsLabel.text = "(\(movieDetail.voteCount) reviews)"
+            }
+            
+            titleLabel.text = movieDetail.title
+            overviewLabel.text = movieDetail.overview
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.genreCollectionView.reloadData()
+            }
+            
         } else {
+            print(movieID)
             navigationController?.popViewController(animated: true)
         }
     }
     
     func isLoading(_ state: Bool) {
-//        print(state)
+        //        print(state)
+    }
+}
+
+extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return viewModel.movieDetail?.genres.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GenreCollectionViewCell.reusableIdentifier, for: indexPath) as? GenreCollectionViewCell {
+            cell.configureCell(genreName: viewModel.movieDetail?.genres[indexPath.row].name ?? "")
+            return cell
+        }
+        
+        return GenreCollectionViewCell()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		303223BF2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303223BE2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift */; };
 		30572FAC2A7953980043C67C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30572FAB2A7953980043C67C /* DetailViewController.swift */; };
 		30572FAE2A7953A50043C67C /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30572FAD2A7953A50043C67C /* DetailViewModel.swift */; };
 		30572FB02A7953AF0043C67C /* DetailDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30572FAF2A7953AF0043C67C /* DetailDataController.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		303223BE2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		30572FAB2A7953980043C67C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		30572FAD2A7953A50043C67C /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		30572FAF2A7953AF0043C67C /* DetailDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDataController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				30572FAB2A7953980043C67C /* DetailViewController.swift */,
 				30572FAD2A7953A50043C67C /* DetailViewModel.swift */,
 				30572FAF2A7953AF0043C67C /* DetailDataController.swift */,
+				303223BE2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				30F3EDD62A71FBED008F484C /* UIIMageView+Extension.swift in Sources */,
 				30572FAC2A7953980043C67C /* DetailViewController.swift in Sources */,
 				30F3EDE52A730B46008F484C /* DiscoverDataController.swift in Sources */,
+				303223BF2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift in Sources */,
 				30572FB02A7953AF0043C67C /* DetailDataController.swift in Sources */,
 				30F3EDE32A730B3D008F484C /* DiscoverViewModel.swift in Sources */,
 				30572FB42A7955530043C67C /* MovieDetailModel.swift in Sources */,

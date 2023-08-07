@@ -45,6 +45,9 @@ final class TabBarViewController: UITabBarController {
         tabViewController.view.backgroundColor = .secondarySystemBackground
         let navigationController = UINavigationController(rootViewController: tabViewController)
         navigationController.navigationBar.isHidden = true
+        navigationController.navigationBar.topItem?.backButtonTitle = ""
+        navigationController.navigationBar.barStyle = UIBarStyle.default
+        navigationController.navigationBar.tintColor = .label
         navigationController.tabBarItem.title = title
         navigationController.tabBarItem.image = UIImage(systemName: defaultImage)
         navigationController.tabBarItem.selectedImage = UIImage(systemName: selectedImage)

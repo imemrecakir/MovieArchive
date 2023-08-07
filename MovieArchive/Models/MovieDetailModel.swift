@@ -16,19 +16,19 @@ import Foundation
 struct MovieDetailModel: Codable {
     let adult: Bool
     let backdropPath: String
-    let belongsToCollection: BelongsToCollection?
+    let belongsToCollection: BelongsToCollectionModel?
     let budget: Int
-    let genres: [Genre]
+    let genres: [GenreModel]
     let homepage: String
     let id: Int
     let imdbID, originalLanguage, originalTitle, overview: String
     let popularity: Double
     let posterPath: String
-    let productionCompanies: [ProductionCompany]
-    let productionCountries: [ProductionCountry]
+    let productionCompanies: [ProductionCompanyModel]
+    let productionCountries: [ProductionCountryModel]
     let releaseDate: String
     let revenue, runtime: Int
-    let spokenLanguages: [SpokenLanguage]
+    let spokenLanguages: [SpokenLanguageModel]
     let status, tagline, title: String
     let video: Bool
     let voteAverage: Double
@@ -55,9 +55,11 @@ struct MovieDetailModel: Codable {
     }
 }
 
-struct BelongsToCollection: Codable {
+struct BelongsToCollectionModel: Codable {
     let id: Int
-    let name, posterPath, backdropPath: String
+    let name: String
+    let posterPath: String?
+    let backdropPath: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name
@@ -66,12 +68,12 @@ struct BelongsToCollection: Codable {
     }
 }
 
-struct Genre: Codable {
+struct GenreModel: Codable {
     let id: Int
     let name: String
 }
 
-struct ProductionCompany: Codable {
+struct ProductionCompanyModel: Codable {
     let id: Int
     let logoPath: String?
     let name, originCountry: String
@@ -84,7 +86,7 @@ struct ProductionCompany: Codable {
     }
 }
 
-struct ProductionCountry: Codable {
+struct ProductionCountryModel: Codable {
     let iso3166_1, name: String
 
     enum CodingKeys: String, CodingKey {
@@ -93,7 +95,7 @@ struct ProductionCountry: Codable {
     }
 }
 
-struct SpokenLanguage: Codable {
+struct SpokenLanguageModel: Codable {
     let englishName, iso639_1, name: String
 
     enum CodingKeys: String, CodingKey {
