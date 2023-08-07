@@ -21,10 +21,10 @@ final class DetailViewController: UIViewController {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.isDirectionalLockEnabled = true
-        scrollView.contentInsetAdjustmentBehavior = .scrollableAxes
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.contentInset = .init(top: 0, left: 0, bottom: 30, right: 0)
         return scrollView
     }()
     
@@ -44,6 +44,7 @@ final class DetailViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
+        imageView.isUserInteractionEnabled = true
         imageView.image = UIImage(systemName: "popcorn")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         return imageView
     }()
@@ -125,16 +126,10 @@ final class DetailViewController: UIViewController {
         return label
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        genreCollectionView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        genreCollectionView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -172,19 +167,21 @@ final class DetailViewController: UIViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor),
             
             scrollContentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            scrollContentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollContentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             scrollContentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             scrollContentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            scrollContentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            scrollContentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            scrollContentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            scrollContentView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor),
             
             topContainerView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
             topContainerView.topAnchor.constraint(equalTo: scrollContentView.topAnchor),
             topContainerView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
-            topContainerView.heightAnchor.constraint(equalTo: scrollContentView.heightAnchor, multiplier: 0.5),
             topContainerView.bottomAnchor.constraint(equalTo: infosStackView.topAnchor, constant: -20),
+            topContainerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
             
             movieImageView.leadingAnchor.constraint(equalTo: topContainerView.leadingAnchor),
             movieImageView.topAnchor.constraint(equalTo: topContainerView.topAnchor),
@@ -193,7 +190,7 @@ final class DetailViewController: UIViewController {
             
             infosStackView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
             infosStackView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
-            infosStackView.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor),
+//            infosStackView.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor),
             
             genreCollectionView.heightAnchor.constraint(equalToConstant: 60)
         ])

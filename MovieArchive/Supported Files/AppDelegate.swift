@@ -29,13 +29,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setNavigationBarStyle() {
         let appearance = UINavigationBarAppearance()
-        
+        appearance.configureWithTransparentBackground()
         let backButtonImage = UIImage(systemName: "arrow.left.circle")?
             .withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -6, bottom: -2, right: 0))
         
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
-        appearance.backButtonAppearance.configureWithDefault(for: .done)
+        appearance.backButtonAppearance.configureWithDefault(for: .plain)
         UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 }
 
