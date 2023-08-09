@@ -18,6 +18,16 @@ final class DetailViewController: UIViewController {
         }
     }
     
+    private lazy var bookmarkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "bookmark.square")?.withTintColor(.label, renderingMode: .alwaysOriginal)
+        imageView.contentMode = .scaleToFill
+        imageView.backgroundColor = .secondarySystemBackground
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(bookmarkNavBarItemTapped)))
+        return imageView
+    }()
+    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -142,6 +152,8 @@ final class DetailViewController: UIViewController {
         view.backgroundColor = .secondarySystemBackground
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = false
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.circle")?.withTintColor(.label, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(bookmarkNavBarItemTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkImageView)
         viewModel.delegate = self
         
         scrollView.addSubview(scrollContentView)
@@ -192,8 +204,15 @@ final class DetailViewController: UIViewController {
             infosStackView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
 //            infosStackView.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor),
             
-            genreCollectionView.heightAnchor.constraint(equalToConstant: 60)
+            genreCollectionView.heightAnchor.constraint(equalToConstant: 60),
+            
+            bookmarkImageView.heightAnchor.constraint(equalToConstant: 40),
+            bookmarkImageView.widthAnchor.constraint(equalToConstant: 40)
         ])
+    }
+    
+    @objc private func bookmarkNavBarItemTapped() {
+        print("okkey")
     }
 }
 

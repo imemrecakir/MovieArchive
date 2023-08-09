@@ -32,12 +32,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance.configureWithTransparentBackground()
         let backButtonImage = UIImage(systemName: "arrow.left.circle")?
             .withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -6, bottom: -2, right: 0))
-        
+
         appearance.setBackIndicatorImage(backButtonImage, transitionMaskImage: backButtonImage)
         appearance.backButtonAppearance.configureWithDefault(for: .plain)
+        appearance.backButtonAppearance.accessibilityFrame.size = CGSize(width: 20, height: 40)
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//        lazy var bookmarkImageView: UIImageView = {
+//            let imageView = UIImageView()
+//            imageView.translatesAutoresizingMaskIntoConstraints = false
+//            imageView.image = UIImage(systemName: "bookmark.square")?.withTintColor(.label, renderingMode: .alwaysOriginal)
+//            imageView.contentMode = .scaleToFill
+//            imageView.backgroundColor = .secondarySystemBackground
+//            imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(bookmarkNavBarItemTapped)))
+//            return imageView
+//        }()
+//
+//        UINavigationItem().leftBarButtonItem = UIBarButtonItem(customView: bookmarkImageView)
+    }
+    
+    @objc private func bookmarkNavBarItemTapped() {
+        print("Selamlaar")
     }
 }
 
