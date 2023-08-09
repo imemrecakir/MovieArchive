@@ -52,8 +52,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UINavigationItem().leftBarButtonItem = UIBarButtonItem(customView: bookmarkImageView)
     }
     
-    @objc private func bookmarkNavBarItemTapped() {
-        print("Selamlaar")
-    }
+//    @objc private func bookmarkNavBarItemTapped() {
+//        print("Selamlaar")
+//    }
 }
 

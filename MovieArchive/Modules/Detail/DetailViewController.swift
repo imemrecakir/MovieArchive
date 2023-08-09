@@ -212,7 +212,7 @@ final class DetailViewController: UIViewController {
     }
     
     @objc private func bookmarkNavBarItemTapped() {
-        print("okkey")
+        viewModel.saveMovie()
     }
 }
 
@@ -238,6 +238,10 @@ extension DetailViewController: DetailViewModelDelegate {
             print(movieID)
             navigationController?.popViewController(animated: true)
         }
+    }
+    
+    func movieSaved() {
+        print("Successfully saved.")
     }
     
     func isLoading(_ state: Bool) {

@@ -7,4 +7,12 @@
 
 import Foundation
 
-final class BookmarksDataController{}
+protocol BookmarksDataControllerProtocol {
+    func fetchMovies(completion: @escaping (Result<[MovieDetailModel], Error>) -> Void)
+}
+
+final class BookmarksDataController: BookmarksDataControllerProtocol {
+        func fetchMovies(completion: @escaping (Result<[MovieDetailModel], Error>) -> Void) {
+            DatabaseManager.shared.fetch(forKey: .savedMovies, completion: completion)
+        }
+}

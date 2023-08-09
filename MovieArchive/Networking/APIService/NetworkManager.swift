@@ -12,7 +12,7 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
 
-    func request<T: Decodable>(_ request: DataRequest, completion: @escaping (Result<T, Error>) -> Void) {
+    func request<T: Codable>(_ request: DataRequest, completion: @escaping (Result<T, Error>) -> Void) {
         
         request.response { response in
             if let error = response.error {
