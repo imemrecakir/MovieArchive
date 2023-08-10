@@ -142,6 +142,13 @@ final class DetailViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkImageView)
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.isHidden = true
@@ -150,10 +157,6 @@ final class DetailViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .secondarySystemBackground
-        tabBarController?.tabBar.isHidden = true
-        navigationController?.navigationBar.isHidden = false
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "bookmark.circle")?.withTintColor(.label, renderingMode: .alwaysOriginal), style: .plain, target: self, action: #selector(bookmarkNavBarItemTapped))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkImageView)
         viewModel.delegate = self
         
         scrollView.addSubview(scrollContentView)

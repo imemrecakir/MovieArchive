@@ -24,7 +24,6 @@ final class BookmarksCollectionViewCell: UICollectionViewCell {
     private let movieTitleLabel: UILabel = {
       let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .label
         label.numberOfLines = 0
         label.lineBreakMode = .byClipping
@@ -43,6 +42,7 @@ final class BookmarksCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupUI() {
+        
         contentView.addSubview(movieImageView)
         contentView.addSubview(movieTitleLabel)
     }
