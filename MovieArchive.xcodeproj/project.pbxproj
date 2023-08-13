@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30215E332A86A4E300A9E2F2 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30215E322A86A4E300A9E2F2 /* Array+Extension.swift */; };
 		3022B8152A8430CD0061E7A4 /* BookmarksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3022B8142A8430CD0061E7A4 /* BookmarksCollectionViewCell.swift */; };
 		303223BF2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303223BE2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift */; };
 		30572FAC2A7953980043C67C /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30572FAB2A7953980043C67C /* DetailViewController.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		30215E322A86A4E300A9E2F2 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		3022B8142A8430CD0061E7A4 /* BookmarksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksCollectionViewCell.swift; sourceTree = "<group>"; };
 		303223BE2A7FDF9B00BE1A8B /* GenreCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCollectionViewCell.swift; sourceTree = "<group>"; };
 		30572FAB2A7953980043C67C /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				30F3EDD52A71FBED008F484C /* UIIMageView+Extension.swift */,
+				30215E322A86A4E300A9E2F2 /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				30BF67FA2A6D73670078C8AE /* BookmarksDataController.swift in Sources */,
 				30BF67EA2A6D72E80078C8AE /* ListViewModel.swift in Sources */,
 				30BF67F82A6D73600078C8AE /* BookmarksViewModel.swift in Sources */,
+				30215E332A86A4E300A9E2F2 /* Array+Extension.swift in Sources */,
 				30DC69162A76B6EF00929FF6 /* ListHeaderView.swift in Sources */,
 				30F3EDC92A71B902008F484C /* Endpoint.swift in Sources */,
 				30BF67F32A6D733C0078C8AE /* TabBarDataController.swift in Sources */,

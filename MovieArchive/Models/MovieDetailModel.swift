@@ -33,6 +33,7 @@ struct MovieDetailModel: Codable {
     let video: Bool
     let voteAverage: Double
     let voteCount: Int
+    var timeStamp: TimeInterval = 0
 
     enum CodingKeys: String, CodingKey {
         case adult
@@ -102,5 +103,11 @@ struct SpokenLanguageModel: Codable {
         case englishName = "english_name"
         case iso639_1 = "iso_639_1"
         case name
+    }
+}
+
+extension MovieDetailModel: Equatable {
+    static func == (lhs: MovieDetailModel, rhs: MovieDetailModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }

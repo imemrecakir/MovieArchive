@@ -17,7 +17,14 @@ final class BookmarksViewModel {
     weak var delegate: BookmarksViewModelDelegate?
     private let dataController: BookmarksDataControllerProtocol = BookmarksDataController()
     
-    var movies: [MovieDetailModel] = []
+    var movies: [MovieDetailModel] = [] {
+        didSet {
+            sortedByDateMovies = movies.reversed()
+            sortedByNameMovies = movies.sorted { $0.title < $1.title }
+        }
+    }
+    var sortedByDateMovies: [MovieDetailModel] = []
+    var sortedByNameMovies: [MovieDetailModel] = []
     var error: Error?
     
     func fetchMovies() {

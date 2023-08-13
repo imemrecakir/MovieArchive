@@ -18,10 +18,10 @@ final class DetailViewController: UIViewController {
         }
     }
     
-    private lazy var bookmarkImageView: UIImageView = {
+    private lazy var bookmarkNavBarIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "bookmark.square")?.withTintColor(.label, renderingMode: .alwaysOriginal)
+        imageView.image = UIImage(systemName: "bookmark")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         imageView.contentMode = .scaleToFill
         imageView.backgroundColor = .secondarySystemBackground
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(bookmarkNavBarItemTapped)))
@@ -146,7 +146,8 @@ final class DetailViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkImageView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkNavBarIcon)
+        viewModel.checkBookmarkMovie()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -205,21 +206,22 @@ final class DetailViewController: UIViewController {
             
             infosStackView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
             infosStackView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
-//            infosStackView.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor),
             
-            genreCollectionView.heightAnchor.constraint(equalToConstant: 60),
-            
-            bookmarkImageView.heightAnchor.constraint(equalToConstant: 40),
-            bookmarkImageView.widthAnchor.constraint(equalToConstant: 40)
+            genreCollectionView.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
     
     @objc private func bookmarkNavBarItemTapped() {
-        viewModel.saveMovie()
+        if viewModel.isBookmarked {
+            viewModel.unBookmarkMovie()
+        } else {
+            viewModel.bookmarkMovie()
+        }
     }
 }
 
 extension DetailViewController: DetailViewModelDelegate {
+    
     func movieDetailFetched() {
         if let movieDetail = viewModel.movieDetail {
             movieImageView.setImage(with: movieDetail.backdropPath, placeholder: "popcorn")
@@ -243,13 +245,27 @@ extension DetailViewController: DetailViewModelDelegate {
         }
     }
     
-    func movieSaved() {
-        print("Successfully saved.")
+    func movieBookmarked(_ result: Bool) {
+        if result {
+            bookmarkNavBarIcon.image = UIImage(systemName: "bookmark.fill")
+        } else {
+            print("show error")
+        }
     }
     
-    func isLoading(_ state: Bool) {
-        //        print(state)
+    func movieUnBookmarked(_ result: Bool) {
+        if result {
+            bookmarkNavBarIcon.image = UIImage(systemName: "bookmark")
+        } else {
+            print("show error")
+        }
     }
+    
+    func movieBookmarkChecked(_ result: Bool) {
+        bookmarkNavBarIcon.image = UIImage(systemName: result ? "bookmark.fill" : "bookmark")
+    }
+    
+    func isLoading(_ state: Bool) {}
 }
 
 extension DetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {

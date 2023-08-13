@@ -9,7 +9,9 @@ import Foundation
 
 protocol DetailViewModelDelegate: AnyObject {
     func movieDetailFetched()
-    func movieSaved()
+    func movieBookmarked(_ result: Bool)
+    func movieUnBookmarked(_ result: Bool)
+    func movieBookmarkChecked(_ result: Bool)
     func isLoading(_ state: Bool)
 }
 
@@ -18,6 +20,7 @@ final class DetailViewModel {
     private let dataController: DetailDataControllerProtocol = DetailDataController()
     
     var movieDetail: MovieDetailModel?
+    var isBookmarked = false
     var error: Error? = nil
     
     func fetchMovieDetail(movieID: Int) {
@@ -27,6 +30,7 @@ final class DetailViewModel {
             case .success(let response):
                 self?.movieDetail = response
                 self?.delegate?.movieDetailFetched()
+                self?.checkBookmarkMovie()
                 self?.delegate?.isLoading(false)
             case .failure(let error):
                 self?.error = error
@@ -36,16 +40,45 @@ final class DetailViewModel {
         }
     }
     
-    func saveMovie() {
+    func bookmarkMovie() {
         delegate?.isLoading(true)
         if let movieDetail {
-            dataController.saveMovies(movie: movieDetail) { [weak self] result in
-                self?.delegate?.movieSaved()
+            dataController.bookmarkMovie(movie: movieDetail) { [weak self] result in
+                self?.delegate?.movieBookmarked(result)
                 self?.delegate?.isLoading(false)
             }
         } else {
-            error = NSError(domain: "Movie can not saved", code: 0)
-            delegate?.movieSaved()
+            error = NSError(domain: "Movie does not exists", code: 0)
+            delegate?.movieBookmarked(false)
+            delegate?.isLoading(false)
+        }
+    }
+    
+    func unBookmarkMovie() {
+        delegate?.isLoading(true)
+        if let movieDetail {
+            dataController.unBookmarkMovie(movie: movieDetail) { [weak self] result in
+                self?.delegate?.movieUnBookmarked(result)
+                self?.delegate?.isLoading(false)
+            }
+        } else {
+            error = NSError(domain: "Movie does not exists", code: 0)
+            delegate?.movieUnBookmarked(false)
+            delegate?.isLoading(false)
+        }
+    }
+    
+    func checkBookmarkMovie() {
+        delegate?.isLoading(true)
+        if let movieDetail {
+            dataController.checkBookmarkMovie(movie: movieDetail) { [weak self] result in
+                self?.isBookmarked = result
+                self?.delegate?.movieBookmarkChecked(result)
+                self?.delegate?.isLoading(false)
+            }
+        } else {
+            error = NSError(domain: "Movie does not exists", code: 0)
+            delegate?.movieBookmarkChecked(false)
             delegate?.isLoading(false)
         }
     }

@@ -44,13 +44,12 @@ final class BookmarksViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchMovies()
         title = "Bookmarks"
-        navigationController?.navigationBar.prefersLargeTitles = true
+//        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
-        navigationController?.navigationBar.prefersLargeTitles = false
         super.viewWillDisappear(animated)
     }
     
