@@ -16,7 +16,6 @@ final class ListViewController: UIViewController {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.isHidden = true
         activityIndicator.color = .label
-        activityIndicator.backgroundColor = .purple
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
     }()
@@ -48,7 +47,6 @@ final class ListViewController: UIViewController {
         viewModel.fetchUpcomingMovies()
         view.addSubview(listCollectionView)
         view.addSubview(activityIndicator)
-        view.bringSubviewToFront(activityIndicator)
     }
     
     private func setupConstraints() {
@@ -62,8 +60,14 @@ final class ListViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
-    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+
+    @objc private func filterTapped() {
+        print("Filter Tapped")
+    }
+}
+
+private extension ListViewController {
+    func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { [weak self] (sectionNumber, env) -> NSCollectionLayoutSection? in
             switch sectionNumber {
             case 0: return self?.getNowPlayingLayoutSection()
@@ -74,7 +78,7 @@ final class ListViewController: UIViewController {
         }
     }
     
-    private func getNowPlayingLayoutSection() -> NSCollectionLayoutSection {
+    func getNowPlayingLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 0)
@@ -93,7 +97,7 @@ final class ListViewController: UIViewController {
         return section
     }
     
-    private func getPopularLayoutSection() -> NSCollectionLayoutSection {
+    func getPopularLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 0)
@@ -112,7 +116,7 @@ final class ListViewController: UIViewController {
         return section
     }
     
-    private func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
+    func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 0)
@@ -131,7 +135,7 @@ final class ListViewController: UIViewController {
         return section
     }
     
-    private func getUpcomingLayoutSection() -> NSCollectionLayoutSection {
+    func getUpcomingLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 0, leading: 0, bottom: 16, trailing: 0)
@@ -148,10 +152,6 @@ final class ListViewController: UIViewController {
         section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
         return section
-    }
-    
-    @objc private func filterTapped() {
-        print("Filter Tapped")
     }
 }
 
