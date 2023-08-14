@@ -26,67 +26,69 @@ final class ListViewModel {
     var upcomingMovies: [MovieResultModel] = []
     var error: Error? = nil
     
+    private let dispatchGroup = DispatchGroup()
+    
     func fetchNowPlayingMovies() {
+        dispatchGroup.enter()
         delegate?.isLoading(true)
         dataController.fetchNowPlayingMovies { [weak self] result in
             switch result {
             case .success(let response):
                 self?.nowPlayingMovies = response.results
                 self?.delegate?.nowPlayingMoviesFetched()
-                self?.delegate?.isLoading(false)
             case .failure(let error):
                 self?.error = error
                 self?.delegate?.nowPlayingMoviesFetched()
-                self?.delegate?.isLoading(false)
             }
+            self?.dispatchGroup.leave()
         }
     }
     
     func fetchPopularMovies() {
-        delegate?.isLoading(true)
+        dispatchGroup.enter()
         dataController.fetchPopularMovies { [weak self] result in
             switch result {
             case .success(let response):
                 self?.popularMovies = response.results
                 self?.delegate?.popularMoviesFetched()
-                self?.delegate?.isLoading(false)
             case .failure(let error):
                 self?.error = error
                 self?.delegate?.popularMoviesFetched()
-                self?.delegate?.isLoading(false)
             }
+            self?.dispatchGroup.leave()
         }
     }
     
     func fetchTopRatedMovies() {
-        delegate?.isLoading(true)
+        dispatchGroup.enter()
         dataController.fetchTopRatedMovies { [weak self] result in
             switch result {
             case .success(let response):
                 self?.topRatedMovies = response.results
                 self?.delegate?.topRatedMoviesFetched()
-                self?.delegate?.isLoading(false)
             case .failure(let error):
                 self?.error = error
                 self?.delegate?.topRatedMoviesFetched()
-                self?.delegate?.isLoading(false)
             }
+            self?.dispatchGroup.leave()
         }
     }
     
     func fetchUpcomingMovies() {
-        delegate?.isLoading(true)
+        dispatchGroup.enter()
         dataController.fetchUpcomingMovies { [weak self] result in
             switch result {
             case .success(let response):
                 self?.upcomingMovies = response.results
                 self?.delegate?.upcomingMoviesFetched()
-                self?.delegate?.isLoading(false)
             case .failure(let error):
                 self?.error = error
                 self?.delegate?.upcomingMoviesFetched()
-                self?.delegate?.isLoading(false)
             }
+            self?.dispatchGroup.leave()
+            self?.dispatchGroup.notify(queue: .main, execute: { [weak self] in
+                self?.delegate?.isLoading(false)
+            })
         }
     }
 }

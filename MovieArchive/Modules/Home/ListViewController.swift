@@ -11,6 +11,16 @@ final class ListViewController: UIViewController {
     
     private let viewModel = ListViewModel()
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isHidden = true
+        activityIndicator.color = .label
+        activityIndicator.backgroundColor = .purple
+        activityIndicator.hidesWhenStopped = true
+        return activityIndicator
+    }()
+    
     private lazy var listCollectionView: UICollectionView = {
         let layout = createCompositionalLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -23,7 +33,7 @@ final class ListViewController: UIViewController {
         collectionView.register(ListCollectionViewCell.self, forCellWithReuseIdentifier: ListCollectionViewCell.reusableIdentifier)
         return collectionView
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -37,6 +47,8 @@ final class ListViewController: UIViewController {
         viewModel.fetchTopRatedMovies()
         viewModel.fetchUpcomingMovies()
         view.addSubview(listCollectionView)
+        view.addSubview(activityIndicator)
+        view.bringSubviewToFront(activityIndicator)
     }
     
     private func setupConstraints() {
@@ -44,7 +56,10 @@ final class ListViewController: UIViewController {
             listCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             listCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            listCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            listCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
@@ -182,6 +197,10 @@ extension ListViewController: ListViewModelDelegate {
     }
     
     func isLoading(_ state: Bool) {
+        
+        activityIndicator.isHidden = state ? false : true
+        state ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+
         print("isLoading : \(state)")
     }
 }
