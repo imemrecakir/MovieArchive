@@ -44,7 +44,6 @@ final class BookmarksViewController: UIViewController {
         super.viewWillAppear(animated)
         viewModel.fetchMovies()
         title = "Bookmarks"
-//        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.isHidden = false
     }
     
