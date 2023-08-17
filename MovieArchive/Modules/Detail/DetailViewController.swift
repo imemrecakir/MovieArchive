@@ -240,7 +240,6 @@ extension DetailViewController: DetailViewModelDelegate {
             }
             
         } else {
-            print(movieID)
             navigationController?.popViewController(animated: true)
         }
     }
@@ -249,7 +248,7 @@ extension DetailViewController: DetailViewModelDelegate {
         if result {
             bookmarkNavBarIcon.image = UIImage(systemName: "bookmark.fill")
         } else {
-            print("show error")
+            // Show error alert
         }
     }
     
@@ -257,7 +256,7 @@ extension DetailViewController: DetailViewModelDelegate {
         if result {
             bookmarkNavBarIcon.image = UIImage(systemName: "bookmark")
         } else {
-            print("show error")
+            // Show error alert
         }
     }
     

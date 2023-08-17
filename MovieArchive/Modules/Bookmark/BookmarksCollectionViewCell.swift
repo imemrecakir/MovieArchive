@@ -26,7 +26,7 @@ final class BookmarksCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .label
         label.numberOfLines = 0
-        label.lineBreakMode = .byClipping
+        label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
         return label
     }()

@@ -60,9 +60,32 @@ final class ListViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-
-    @objc private func filterTapped() {
-        print("Filter Tapped")
+    
+    private func showSeeAll(index: Int) {
+        let title = viewModel.categoryList[index]
+        var movies: [MovieResultModel] = []
+        var endpoint: Endpoint = .getNowPlayingMovies
+        switch index {
+        case 0:
+            movies = viewModel.nowPlayingMovies
+            endpoint = .getNowPlayingMovies
+            break
+        case 1:
+            movies = viewModel.popularMovies
+            endpoint = .getPopularMovies
+            break
+        case 2:
+            movies = viewModel.topRatedMovies
+            endpoint = .getTopRatedMovies
+            break
+        case 3:
+            movies = viewModel.upcomingMovies
+            endpoint = .getUpcomingMovies
+            break
+        default: break
+        }
+        let seeAllViewController = SeeAllViewController(title: title, movies: movies, endpoint: endpoint)
+        navigationController?.pushViewController(seeAllViewController, animated: true)
     }
 }
 
@@ -89,6 +112,7 @@ private extension ListViewController {
         
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44))
         let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
+        header.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: -16)
         
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [header]
@@ -158,7 +182,7 @@ private extension ListViewController {
 extension ListViewController: ListViewModelDelegate {
     func nowPlayingMoviesFetched() {
         if viewModel.error != nil && viewModel.nowPlayingMovies.isEmpty {
-            print("Error - \(String(describing: viewModel.error.debugDescription))")
+            // Show error alert
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.listCollectionView.reloadData()
@@ -168,7 +192,7 @@ extension ListViewController: ListViewModelDelegate {
     
     func popularMoviesFetched() {
         if viewModel.error != nil && viewModel.popularMovies.isEmpty {
-            print("Error - \(String(describing: viewModel.error.debugDescription))")
+            // Show error alert
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.listCollectionView.reloadData()
@@ -178,7 +202,7 @@ extension ListViewController: ListViewModelDelegate {
     
     func topRatedMoviesFetched() {
         if viewModel.error != nil && viewModel.topRatedMovies.isEmpty {
-            print("Error - \(String(describing: viewModel.error.debugDescription))")
+            // Show error alert
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.listCollectionView.reloadData()
@@ -188,7 +212,7 @@ extension ListViewController: ListViewModelDelegate {
     
     func upcomingMoviesFetched() {
         if viewModel.error != nil && viewModel.upcomingMovies.isEmpty {
-            print("Error - \(String(describing: viewModel.error.debugDescription))")
+            // Show error alert
         } else {
             DispatchQueue.main.async { [weak self] in
                 self?.listCollectionView.reloadData()
@@ -197,18 +221,21 @@ extension ListViewController: ListViewModelDelegate {
     }
     
     func isLoading(_ state: Bool) {
-        
         activityIndicator.isHidden = state ? false : true
         state ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-
-        print("isLoading : \(state)")
     }
 }
 
 extension ListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ListHeaderView.reusableIdentifier, for: indexPath) as? ListHeaderView {
-            headerView.configureHeader(headerTitle: viewModel.categoryList[indexPath.section])
+            let category = viewModel.categoryList[indexPath.section]
+            headerView.configureHeader(headerTitle: category)
+            headerView.completion = { [weak self] in
+//                let seeAllViewController = SeeAllViewController(title: category)
+//                self?.navigationController?.pushViewController(seeAllViewController, animated: true)
+                self?.showSeeAll(index: indexPath.section)
+            }
             return headerView
         }
         

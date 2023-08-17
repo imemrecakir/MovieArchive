@@ -25,11 +25,9 @@ final class NetworkManager {
             }
             
             do {
-                print(data)
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedData))
             } catch let error {
-                print(error.localizedDescription)
                 completion(.failure(error))
             }
         }
