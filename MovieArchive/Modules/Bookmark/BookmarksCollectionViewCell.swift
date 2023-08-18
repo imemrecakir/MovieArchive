@@ -62,7 +62,7 @@ final class BookmarksCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(movieModel: MovieDetailModel) {
-        movieImageView.setImage(with: movieModel.posterPath, placeholder: "popcorn")
+        movieImageView.setImage(with: movieModel.posterPath)
         movieTitleLabel.text = movieModel.title
     }
 

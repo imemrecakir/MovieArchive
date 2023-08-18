@@ -46,6 +46,6 @@ final class ListCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(movieModel: MovieResultModel) {
-        movieImageView.setImage(with: movieModel.posterPath, placeholder: "popcorn")
+        movieImageView.setImage(with: movieModel.posterPath)
     }
 }

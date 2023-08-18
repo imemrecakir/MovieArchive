@@ -7,10 +7,17 @@
 
 import Foundation
 
-protocol SeeAllDataProtocol {
-    
+protocol SeeAllDataControllerProtocol {
+    func fetchMovies(page: Int, endpoint: Endpoint, completion: @escaping (Result<MovieModel, Error>) -> Void)
 }
 
-final class SeeAllDataController: SeeAllDataProtocol {
-    
+final class SeeAllDataController: SeeAllDataControllerProtocol {
+    func fetchMovies(page: Int, endpoint: Endpoint, completion: @escaping (Result<MovieModel, Error>) -> Void) {
+        let parameters: [String: Any] = [
+            "page": page
+        ]
+        let request = endpoint.request(parameters: parameters)
+        NetworkManager.shared.request(request, completion: completion)
+    }
 }
+

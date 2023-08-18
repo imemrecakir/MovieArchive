@@ -8,7 +8,7 @@
 import UIKit
 
 final class SeeAllViewController: UIViewController {
-
+    
     private let viewModel = SeeAllViewModel()
     
     private lazy var seeAllCollectionView: UICollectionView = {
@@ -47,7 +47,7 @@ final class SeeAllViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         super.viewWillDisappear(animated)
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -56,6 +56,7 @@ final class SeeAllViewController: UIViewController {
     
     private func setupUI() {
         viewModel.delegate = self
+        view.backgroundColor = .secondarySystemBackground
         view.addSubview(seeAllCollectionView)
     }
     
@@ -70,7 +71,11 @@ final class SeeAllViewController: UIViewController {
 }
 
 extension SeeAllViewController: SeeAllViewModelDelegate {
-    
+    func moviesFetched() {
+        DispatchQueue.main.async { [weak self] in
+            self?.seeAllCollectionView.reloadData()
+        }
+    }
 }
 
 extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -84,6 +89,14 @@ extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return cell
         }
         return UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == viewModel.movies.count - 10 {
+            print(viewModel.movies.count)
+            viewModel.fetchMovies()
+            print(viewModel.movies.count)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -24,7 +24,7 @@ final class ListViewModel {
     var popularMovies: [MovieResultModel] = []
     var topRatedMovies: [MovieResultModel] = []
     var upcomingMovies: [MovieResultModel] = []
-    var error: Error? = nil
+    var error: Error?
     
     private let dispatchGroup = DispatchGroup()
     

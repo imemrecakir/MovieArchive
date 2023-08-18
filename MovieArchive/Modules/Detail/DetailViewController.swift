@@ -224,7 +224,7 @@ extension DetailViewController: DetailViewModelDelegate {
     
     func movieDetailFetched() {
         if let movieDetail = viewModel.movieDetail {
-            movieImageView.setImage(with: movieDetail.backdropPath, placeholder: "popcorn")
+            movieImageView.setImage(with: movieDetail.backdropPath)
             voteAverageLabel.text = "\(String(format: "%.2f", movieDetail.voteAverage))"
             if movieDetail.voteCount >= 1000 {
                 voteReviewsLabel.text = "(\((movieDetail.voteCount / 1000))k reviews)"
@@ -238,9 +238,9 @@ extension DetailViewController: DetailViewModelDelegate {
             DispatchQueue.main.async { [weak self] in
                 self?.genreCollectionView.reloadData()
             }
-            
         } else {
             navigationController?.popViewController(animated: true)
+            // Show alert and pop view controller
         }
     }
     

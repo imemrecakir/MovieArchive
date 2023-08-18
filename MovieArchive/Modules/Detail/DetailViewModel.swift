@@ -21,7 +21,7 @@ final class DetailViewModel {
     
     var movieDetail: MovieDetailModel?
     var isBookmarked = false
-    var error: Error? = nil
+    var error: Error?
     
     func fetchMovieDetail(movieID: Int) {
         delegate?.isLoading(true)

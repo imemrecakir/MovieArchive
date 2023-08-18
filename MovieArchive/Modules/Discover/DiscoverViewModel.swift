@@ -13,7 +13,7 @@ protocol DiscoverViewModelDelegate: AnyObject {
 
 final class DiscoverViewModel {
     weak var delegate: DiscoverViewModelDelegate?
-    private let dataController: DiscoverDataProtocol = DiscoverDataController()
+    private let dataController: DiscoverDataControllerProtocol = DiscoverDataController()
     
     var movies: [MovieResultModel] = []
     var movie: MovieModel?

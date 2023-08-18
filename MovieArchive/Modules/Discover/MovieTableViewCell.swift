@@ -86,7 +86,7 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     func configure(movie: MovieResultModel) {
-        movieImageView.setImage(with: movie.posterPath, placeholder: "popcorn")
+        movieImageView.setImage(with: movie.posterPath)
         titleLabel.text = movie.title
         dateLabel.text = movie.releaseDate.dateFormatted()
     }

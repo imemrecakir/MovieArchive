@@ -8,11 +8,11 @@
 import Foundation
 import Alamofire
 
-protocol DiscoverDataProtocol {
+protocol DiscoverDataControllerProtocol {
     func searchMovies(query: String, completion: @escaping (Result<MovieModel, Error>) -> Void)
 }
 
-final class DiscoverDataController: DiscoverDataProtocol {
+final class DiscoverDataController: DiscoverDataControllerProtocol {
     
     func searchMovies(query: String, completion: @escaping (Result<MovieModel, Error>) -> Void) {
         let parameters: [String: Any] = [

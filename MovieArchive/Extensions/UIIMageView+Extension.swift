@@ -6,16 +6,15 @@
 //
 
 import UIKit
-//import Kingfisher
 
 extension UIImageView {
     private var baseImageURL: String {
        return "https://image.tmdb.org/t/p/original"
     }
     
-    func setImage(with imageEndpoint: String, placeholder: String) {
-        let url = URL(string: "\(baseImageURL)\(imageEndpoint)")
-        let placeholderImage = UIImage(systemName: placeholder)?.withTintColor(.label, renderingMode: .alwaysOriginal)
+    func setImage(with imageEndpoint: String?) {
+        let url = URL(string: "\(baseImageURL)\(imageEndpoint ?? "")")
+        let placeholderImage = UIImage(named: "AppIcon")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         self.kf.setImage(with: url, placeholder: placeholderImage)
     }
 }
