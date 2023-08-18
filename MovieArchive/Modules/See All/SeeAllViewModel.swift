@@ -22,18 +22,16 @@ final class SeeAllViewModel {
     var totalPages: Int = 0
     
     func fetchMovies() {
-        if totalPages != page {
-            dataController.fetchMovies(page: page, endpoint: endpoint) { [weak self] result in
-                switch result {
-                case .success(let response):
-                    self?.page = response.page + 1
-                    self?.totalPages = response.totalPages
-                    self?.movies.append(contentsOf: response.results)
-                    self?.delegate?.moviesFetched()
-                case .failure(let error):
-                    self?.error = error
-                    self?.delegate?.moviesFetched()
-                }
+        dataController.fetchMovies(page: page, endpoint: endpoint) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.page = response.page + 1
+                self?.totalPages = response.totalPages
+                self?.movies.append(contentsOf: response.results)
+                self?.delegate?.moviesFetched()
+            case .failure(let error):
+                self?.error = error
+                self?.delegate?.moviesFetched()
             }
         }
     }

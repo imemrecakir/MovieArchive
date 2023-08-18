@@ -235,6 +235,9 @@ extension DetailViewController: DetailViewModelDelegate {
             titleLabel.text = movieDetail.title
             overviewLabel.text = movieDetail.overview
             
+            if movieDetail.genres.isEmpty {
+                self.genreCollectionView.removeFromSuperview()
+            }
             DispatchQueue.main.async { [weak self] in
                 self?.genreCollectionView.reloadData()
             }

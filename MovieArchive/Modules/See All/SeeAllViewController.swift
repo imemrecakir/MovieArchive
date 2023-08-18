@@ -74,6 +74,7 @@ extension SeeAllViewController: SeeAllViewModelDelegate {
     func moviesFetched() {
         DispatchQueue.main.async { [weak self] in
             self?.seeAllCollectionView.reloadData()
+            print("Count : \(self?.viewModel.movies.count) - Page: \(self?.viewModel.page) - TotalPages \(self?.viewModel.totalPages)")
         }
     }
 }
@@ -92,10 +93,9 @@ extension SeeAllViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.item == viewModel.movies.count - 10 {
-            print(viewModel.movies.count)
+        if indexPath.item == viewModel.movies.count - 10 && viewModel.totalPages != viewModel.page {
+            print("Before reload \(viewModel.movies.count)")
             viewModel.fetchMovies()
-            print(viewModel.movies.count)
         }
     }
     

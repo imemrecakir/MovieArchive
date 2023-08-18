@@ -15,15 +15,16 @@ import Foundation
 
 struct MovieDetailModel: Codable {
     let adult: Bool
-    let backdropPath: String
+    let backdropPath: String?
     let belongsToCollection: BelongsToCollectionModel?
     let budget: Int
     let genres: [GenreModel]
     let homepage: String
     let id: Int
-    let imdbID, originalLanguage, originalTitle, overview: String
+    let imdbID: String?
+    let originalLanguage, originalTitle, overview: String
     let popularity: Double
-    let posterPath: String
+    let posterPath: String?
     let productionCompanies: [ProductionCompanyModel]
     let productionCountries: [ProductionCountryModel]
     let releaseDate: String
