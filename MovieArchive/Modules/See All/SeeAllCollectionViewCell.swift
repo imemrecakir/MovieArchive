@@ -12,13 +12,15 @@ final class SeeAllCollectionViewCell: UICollectionViewCell {
     static let reusableIdentifier = "SeeAllCollectionViewCell"
     
     private let movieImageView: UIImageView = {
-        let movieImageView = UIImageView()
-        movieImageView.translatesAutoresizingMaskIntoConstraints = false
-        movieImageView.layer.cornerRadius = 12
-        movieImageView.clipsToBounds = true
-        movieImageView.layer.masksToBounds = true
-        movieImageView.contentMode = .redraw
-        return movieImageView
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 12
+        imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .redraw
+        imageView.layer.borderColor = UIColor.secondarySystemFill.cgColor
+        imageView.layer.borderWidth = 0.5
+        return imageView
     }()
     
     private let movieTitleLabel: UILabel = {

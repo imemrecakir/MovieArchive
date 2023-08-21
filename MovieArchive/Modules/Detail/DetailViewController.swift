@@ -21,9 +21,12 @@ final class DetailViewController: UIViewController {
     private lazy var bookmarkNavBarIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "bookmark")?.withTintColor(.label, renderingMode: .alwaysOriginal)
-        imageView.contentMode = .scaleToFill
-        imageView.backgroundColor = .secondarySystemBackground
+        let image = UIImage(systemName: "bookmark")?.withTintColor(.label, renderingMode: .alwaysOriginal)
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .tertiarySystemGroupedBackground
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 6
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(bookmarkNavBarItemTapped)))
         return imageView
     }()
@@ -34,7 +37,7 @@ final class DetailViewController: UIViewController {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.contentInsetAdjustmentBehavior = .never
-        scrollView.contentInset = .init(top: 0, left: 0, bottom: 30, right: 0)
+        scrollView.contentInset = .init(top: 0, left: 0, bottom: 40, right: 0)
         return scrollView
     }()
     
@@ -53,7 +56,7 @@ final class DetailViewController: UIViewController {
     private let movieImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .redraw
         imageView.isUserInteractionEnabled = true
         imageView.image = UIImage(systemName: "popcorn")?.withTintColor(.label, renderingMode: .alwaysOriginal)
         return imageView
@@ -104,7 +107,18 @@ final class DetailViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .boldSystemFont(ofSize: 28)
+        label.font = .boldSystemFont(ofSize: 14)
+        label.textAlignment = .center
+        label.textColor = .label
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        return label
+    }()
+    
+    private let originalTitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .boldSystemFont(ofSize: 24)
         label.textColor = .label
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
@@ -130,9 +144,10 @@ final class DetailViewController: UIViewController {
     private let overviewLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
-        label.textColor = .tertiaryLabel
+        label.textColor = .secondaryLabel
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.setContentHuggingPriority(.required, for: .horizontal)
         return label
     }()
     
@@ -146,7 +161,10 @@ final class DetailViewController: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: bookmarkNavBarIcon)
+        
+        let rightBarButtonItem = UIBarButtonItem(customView: bookmarkNavBarIcon)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        
         viewModel.checkBookmarkMovie()
     }
     
@@ -171,7 +189,7 @@ final class DetailViewController: UIViewController {
         voteStackView.addArrangedSubview(voteReviewsLabel)
         
         infosStackView.addArrangedSubview(voteStackView)
-        infosStackView.addArrangedSubview(titleLabel)
+        infosStackView.addArrangedSubview(originalTitleLabel)
         infosStackView.addArrangedSubview(genreCollectionView)
         infosStackView.addArrangedSubview(overviewLabel)
         scrollContentView.addSubview(infosStackView)
@@ -179,6 +197,9 @@ final class DetailViewController: UIViewController {
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
+            bookmarkNavBarIcon.heightAnchor.constraint(equalToConstant: 30),
+            bookmarkNavBarIcon.widthAnchor.constraint(equalToConstant: 30),
+            
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -194,7 +215,7 @@ final class DetailViewController: UIViewController {
             scrollContentView.heightAnchor.constraint(equalTo: scrollView.frameLayoutGuide.heightAnchor),
             
             topContainerView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
-            topContainerView.topAnchor.constraint(equalTo: scrollContentView.topAnchor),
+            topContainerView.topAnchor.constraint(equalTo: scrollContentView.safeAreaLayoutGuide.topAnchor),
             topContainerView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
             topContainerView.bottomAnchor.constraint(equalTo: infosStackView.topAnchor, constant: -20),
             topContainerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
@@ -206,6 +227,7 @@ final class DetailViewController: UIViewController {
             
             infosStackView.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor),
             infosStackView.trailingAnchor.constraint(equalTo: scrollContentView.trailingAnchor),
+//            infosStackView.bottomAnchor.constraint(equalTo: scrollContentView.bottomAnchor),
             
             genreCollectionView.heightAnchor.constraint(equalToConstant: 60)
         ])
@@ -232,7 +254,10 @@ extension DetailViewController: DetailViewModelDelegate {
                 voteReviewsLabel.text = "(\(movieDetail.voteCount) reviews)"
             }
             
+            navigationItem.titleView = titleLabel
+            
             titleLabel.text = movieDetail.title
+            originalTitleLabel.text = movieDetail.originalTitle
             overviewLabel.text = movieDetail.overview
             
             if movieDetail.genres.isEmpty {

@@ -74,7 +74,6 @@ extension SeeAllViewController: SeeAllViewModelDelegate {
     func moviesFetched() {
         DispatchQueue.main.async { [weak self] in
             self?.seeAllCollectionView.reloadData()
-            print("Count : \(self?.viewModel.movies.count) - Page: \(self?.viewModel.page) - TotalPages \(self?.viewModel.totalPages)")
         }
     }
 }
